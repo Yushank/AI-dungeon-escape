@@ -24,6 +24,11 @@ export const Start = () => {
   }, [socket]);
 
   async function sendInitialPrompt() {
+    if (isConnecting) {
+      console.log("⚠️ Waiting for socket connection...");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
