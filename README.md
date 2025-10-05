@@ -8,7 +8,7 @@ A retro-styled text adventure game where players must escape a mysterious dungeo
 
 ## 🎯 Live Demo
 
-https://ai-dungeon-escape-egnf.vercel.app/home
+https://ai-dungeon-escape-egnf.vercel.app/
 
 ## ✨ Features
 
