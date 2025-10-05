@@ -2,11 +2,15 @@ import axios from "axios";
 import React from "react";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
+import { useGame } from "../context/GameContext";
 
 export const Start = () => {
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useGame();
 
   async function sendInitialPrompt() {
+    setIsLoading(true);
+
     try {
       await axios.post(`${BACKEND_URL}/api/v1/input`, {
         prompt: "lets go",
@@ -18,13 +22,20 @@ export const Start = () => {
   }
 
   return (
-    <div>
+    <div className="text-center">
       <button
-        className="rounded-lg px-6 py-4 bg-gray-800 hover:bg-gray-900 text-white"
+        className="rounded-lg px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold text-lg transition-all disabled:bg-gray-400 disabled:cursor-not-allowed"
         onClick={sendInitialPrompt}
+        disabled={isLoading}
       >
-        Start
+        {isLoading ? "Starting Adventure..." : "🎮 Start Game"}
       </button>
+
+      {isLoading && (
+        <p className="mt-4 text-gray-600 animate-pulse">
+          Generating your dungeon...
+        </p>
+      )}
     </div>
   );
 };

@@ -1,14 +1,24 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { useGame } from "../context/GameContext";
 
 const InputComp = () => {
   const [input, setInput] = useState("");
+  const { setIsLoading, isLoading } = useGame();
 
-  async function handleSubmit() {
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (!input.trim() || isLoading) return;
+
+    setIsLoading(true);
+    const userInput = input.trim();
+    setInput("");
+
     try {
       const res = await axios.post(`${BACKEND_URL}/api/v1/input`, {
-        prompt: input,
+        choice: input,
       });
       console.log("Backend acknowledged", res.data);
       setInput("");
@@ -18,22 +28,27 @@ const InputComp = () => {
   }
 
   return (
-    <div className="flex max-w-xl mx-auto p-4 gap-2">
-      <div>
+    <div className="mt-6">
+      <h3 className="text-lg font-semibold text-gray-700 mb-3">
+        Or type your own action:
+      </h3>
+      <form onSubmit={handleSubmit} className="flex gap-2">
         <input
-          className="flex-1 p-4 border border-gray-300 rounded-lg"
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Describe what game you want"
-        ></input>
-      </div>
-      <button
-        className="bg-blue-500 rounded-lg hover:bg-blue-600 text-white font-semibold py-2 px-2 border border-blue-500"
-        onClick={handleSubmit}
-      >
-        Send
-      </button>
+          disabled={isLoading}
+          placeholder="Type your action or question..."
+          className="flex-1 px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:border-blue-500 disabled:bg-gray-200 disabled:cursor-not-allowed"
+        />
+        <button
+          type="submit"
+          disabled={!input.trim() || isLoading}
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed"
+        >
+          {isLoading ? "Sending..." : "Send"}
+        </button>
+      </form>
     </div>
   );
 };

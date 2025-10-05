@@ -1,9 +1,9 @@
-// hooks/index.ts
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
 export const useResponse = () => {
   const [response, setResponse] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     console.log("🔌 Connecting to Socket.IO...");
@@ -13,8 +13,9 @@ export const useResponse = () => {
       console.log("Socket connected:", socket.id);
     });
 
-    socket.on("gameData", (data) => {
+    socket.on("response-data", (data) => {
       console.log("DATA RECEIVED FROM SOCKET:", data);
+      setIsLoading(false);
       setResponse(data);
     });
 
@@ -27,5 +28,5 @@ export const useResponse = () => {
     };
   }, []);
 
-  return { response };
+  return { response, isLoading };
 };

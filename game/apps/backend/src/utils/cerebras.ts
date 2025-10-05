@@ -20,7 +20,7 @@ const client = new Cerebras({
 export async function getAIResponse(
   userChoice: string
 ): Promise<ChatCompletion> {
-  console.log("reached getPrompResponse function");
+  console.log("reached geAIResponse function");
   const response = (await client.chat.completions.create({
     messages: [
       {
