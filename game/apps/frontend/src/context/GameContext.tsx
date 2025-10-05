@@ -17,6 +17,7 @@ interface GameContextType {
   gameStatus: "idle" | "active" | "won" | "lost";
   startNewGame: () => void;
   turnCount: number;
+  isConnected: boolean;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -27,24 +28,35 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   const [response, setResponse] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
   const [sessionId, setSessionId] = useState<string>(uuidv4());
-  const [timeRemaining, setTimeRemaining] = useState(300); // 5 mins
+  const [timeRemaining, setTimeRemaining] = useState(300);
   const [gameStatus, setGameStatus] = useState<
     "idle" | "active" | "won" | "lost"
   >("idle");
   const [turnCount, setTurnCount] = useState(0);
 
   useEffect(() => {
-    console.log("Connecting to socket.io...");
-    const newSocket = io(BACKEND_URL);
+    console.log("Connecting to socket.io...", BACKEND_URL);
+
+    const newSocket = io(BACKEND_URL, {
+      transports: ["websocket", "polling"],
+      withCredentials: true,
+      timeout: 10000,
+    });
+
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
-      console.log("socket connected", newSocket.id);
+      console.log("Socket connected", newSocket.id);
+      setIsConnected(true);
     });
 
     newSocket.on("response-data", (data) => {
       console.log("DATA RECEIVED FROM SOCKET:", data);
+      console.log("Expected session:", sessionId);
+      console.log("Received session:", data.sessionId);
+      console.log("Session match:", data.sessionId === sessionId);
 
       if (data.sessionId === sessionId) {
         setIsLoading(false);
@@ -63,10 +75,12 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
 
     newSocket.on("connect_error", (err) => {
       console.error("Socket connection error:", err.message);
+      setIsConnected(false);
     });
 
     newSocket.on("disconnect", () => {
       console.log("Socket disconnected");
+      setIsConnected(false);
     });
 
     return () => {
@@ -113,6 +127,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
         gameStatus,
         startNewGame,
         turnCount,
+        isConnected,
       }}
     >
       {children}

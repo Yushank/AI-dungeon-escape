@@ -27,11 +27,24 @@ router.get("/hello", (req: Request, res: Response) => {
 });
 
 router.post("/input", async (req, res) => {
-  const { choice, sessionId } = req.body;
-  console.log("Received choice from user", choice);
+  const { choice, prompt, sessionId } = req.body;
+  console.log(
+    "Received from user - choice:",
+    choice,
+    "prompt:",
+    prompt,
+    "session:",
+    sessionId
+  );
+
+  const userInput = choice || prompt;
 
   if (!sessionId) {
     return res.status(400).json({ msg: "sessionId is required" });
+  }
+
+  if (!userInput) {
+    return res.status(400).json({ msg: "choice or prompt is required" });
   }
 
   try {
@@ -47,10 +60,10 @@ router.post("/input", async (req, res) => {
       console.log("Created new session:", sessionId);
     }
 
-    if (choice && session.turnCount > 0) {
+    if (userInput && session.turnCount > 0) {
       session.history.push({
         role: "user",
-        content: choice,
+        content: userInput,
       });
     }
 
@@ -68,6 +81,9 @@ router.post("/input", async (req, res) => {
     });
 
     console.log("response data from ai:", response);
+    console.log("Emitting socket data to session:", sessionId);
+    console.log("Total connected clients:", io.engine.clientsCount);
+
     io.emit("response-data", {
       sessionId,
       data: response,
@@ -75,6 +91,7 @@ router.post("/input", async (req, res) => {
 
     res.json({ message: "Processing...", turnCount: session.turnCount });
   } catch (error) {
+    console.error("Error in /input route:", error);
     return res.status(500).json({ msg: `Internal server error: ${error}` });
   }
 });
@@ -91,7 +108,7 @@ router.post("/reset", (req: Request, res: Response) => {
 });
 
 router.get("/session/:sessionId", (req: Request, res: Response) => {
-  const { sessionId } = req.body;
+  const { sessionId } = req.params;
   const session = gameSessions.get(sessionId);
 
   if (session) {
