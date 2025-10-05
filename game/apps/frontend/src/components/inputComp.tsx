@@ -31,7 +31,7 @@ const InputComp = () => {
 
   return (
     <div className="mt-6">
-      <h3 className="text-lg font-['Press_Start_2P'] text-yellow-400 mb-3 text-sm">
+      <h3 className="text-lg font-['Press_Start_2P'] text-yellow-400 mb-3">
         OR TYPE YOUR COMMAND:
       </h3>
       <form onSubmit={handleSubmit} className="flex gap-2">

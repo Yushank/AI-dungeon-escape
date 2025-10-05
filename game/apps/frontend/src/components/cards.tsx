@@ -1,4 +1,3 @@
-import React from "react";
 import { useGame } from "../context/GameContext";
 import axios from "axios";
 import { BACKEND_URL } from "../config";

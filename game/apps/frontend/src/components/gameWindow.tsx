@@ -1,4 +1,3 @@
-import React from "react";
 import { SceneDisplay } from "./sceneDisplay";
 import { OptionWindow } from "./optionWindow";
 import InputComp from "./inputComp";

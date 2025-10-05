@@ -1,4 +1,3 @@
-import React from "react";
 import { Cards } from "./cards";
 import { useGame } from "../context/GameContext";
 
@@ -19,7 +18,7 @@ export const OptionWindow = () => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-xl font-['Press_Start_2P'] text-yellow-400 text-sm">
+      <h3 className="text-xl font-['Press_Start_2P'] text-yellow-400">
         CHOOSE YOUR ACTION:
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
