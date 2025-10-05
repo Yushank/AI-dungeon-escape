@@ -96,7 +96,6 @@ export const Start = () => {
       </div>
 
       <div className="mt-4 text-xs text-gray-500">
-        <p>Backend: {BACKEND_URL}</p>
         <p>Connected: {isConnected ? "Yes" : "No"}</p>
         <p>Session: {sessionId}</p>
       </div>
