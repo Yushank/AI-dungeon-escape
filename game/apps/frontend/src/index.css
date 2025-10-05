@@ -1,1 +1,36 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+/* Retro button component class */
+.retro-btn {
+  @apply font-['Press_Start_2P'] text-xs px-6 py-3 border-4 border-gray-900 bg-gray-700 text-white uppercase transition-all duration-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)] hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-[0px_0px_0px_0px_rgba(0,0,0,0.8)] active:translate-x-1 active:translate-y-1;
+}
+
+/* Custom typing animation */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #00ff00;
+  }
+}
+
+.typing-animation {
+  overflow: hidden;
+  border-right: 3px solid #00ff00;
+  white-space: nowrap;
+  animation:
+    typing 1s steps(40, end),
+    blink-caret 0.75s step-end infinite;
+}
