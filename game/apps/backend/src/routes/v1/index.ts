@@ -1,5 +1,5 @@
 import { getAIResponse } from "../../utils/cerebras.js";
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import { io } from "../../index.js";
 
 export const router = Router();
@@ -22,7 +22,7 @@ setInterval(() => {
   }
 }, 300000);
 
-router.get("/hello", (req, res) => {
+router.get("/hello", (req: Request, res: Response) => {
   res.json({ message: "hello" });
 });
 
@@ -79,7 +79,7 @@ router.post("/input", async (req, res) => {
   }
 });
 
-router.post("/reset", (req, res) => {
+router.post("/reset", (req: Request, res: Response) => {
   const { sessionId } = req.body;
 
   if (sessionId && gameSessions.has(sessionId)) {
@@ -90,7 +90,7 @@ router.post("/reset", (req, res) => {
   res.json({ message: "session reset" });
 });
 
-router.get("/session/:sessionId", (req, res) => {
+router.get("/session/:sessionId", (req: Request, res: Response) => {
   const { sessionId } = req.body;
   const session = gameSessions.get(sessionId);
 
