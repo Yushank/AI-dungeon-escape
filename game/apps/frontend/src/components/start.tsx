@@ -3,7 +3,7 @@ import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
 import { useState } from "react";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 export const Start = () => {
   const navigate = useNavigate();
