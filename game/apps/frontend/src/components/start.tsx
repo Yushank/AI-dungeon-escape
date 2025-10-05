@@ -43,7 +43,7 @@ export const Start = () => {
       )}
 
       <div className="mt-8 text-sm text-gray-500">
-        <p>⏱️ You have 10 minutes to escape!</p>
+        <p>⏱️ You have 5 minutes to escape!</p>
         <p>🎯 Make smart choices to find your way out</p>
       </div>
     </div>

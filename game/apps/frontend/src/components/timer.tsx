@@ -12,13 +12,13 @@ export const Timer = () => {
   const seconds = timeRemaining % 60;
 
   const getTimerColor = () => {
-    if (timeRemaining > 300) return "text-green-600 border-green-500"; // > 5 min
+    if (timeRemaining > 200) return "text-green-600 border-green-500"; // > 5 min
     if (timeRemaining > 60) return "text-yellow-600 border-yellow-500"; // > 1 min
     return "text-red-600 border-red-500 animate-pulse"; // < 1 min
   };
 
   const getProgressColor = () => {
-    if (timeRemaining > 300) return "bg-green-500";
+    if (timeRemaining > 200) return "bg-green-500";
     if (timeRemaining > 60) return "bg-yellow-500";
     return "bg-red-500";
   };

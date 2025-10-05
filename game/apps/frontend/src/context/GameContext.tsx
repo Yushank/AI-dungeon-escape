@@ -5,6 +5,7 @@ import { useState } from "react";
 import { createContext } from "react";
 import { io, Socket } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
+import { BACKEND_URL } from "../config";
 
 interface GameContextType {
   response: any;
@@ -35,7 +36,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     console.log("Connecting to socket.io...");
-    const newSocket = io("http://localhost:4000");
+    const newSocket = io(BACKEND_URL);
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
@@ -58,6 +59,10 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
           setGameStatus("active");
         }
       }
+    });
+
+    newSocket.on("connect_error", (err) => {
+      console.error("Socket connection error:", err.message);
     });
 
     newSocket.on("disconnect", () => {
