@@ -18,7 +18,7 @@ const InputComp = () => {
 
     try {
       const res = await axios.post(`${BACKEND_URL}/api/v1/input`, {
-        choice: input,
+        choice: userInput,
       });
       console.log("Backend acknowledged", res.data);
       setInput("");
