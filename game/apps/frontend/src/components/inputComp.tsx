@@ -5,7 +5,7 @@ import { useGame } from "../context/GameContext";
 
 const InputComp = () => {
   const [input, setInput] = useState("");
-  const { setIsLoading, isLoading } = useGame();
+  const { setIsLoading, isLoading, sessionId } = useGame();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -19,18 +19,20 @@ const InputComp = () => {
     try {
       const res = await axios.post(`${BACKEND_URL}/api/v1/input`, {
         choice: userInput,
+        sessionId: sessionId,
       });
       console.log("Backend acknowledged", res.data);
       setInput("");
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   }
 
   return (
     <div className="mt-6">
-      <h3 className="text-lg font-semibold text-gray-700 mb-3">
-        Or type your own action:
+      <h3 className="text-lg font-['Press_Start_2P'] text-yellow-400 mb-3 text-sm">
+        OR TYPE YOUR COMMAND:
       </h3>
       <form onSubmit={handleSubmit} className="flex gap-2">
         <input
@@ -38,15 +40,15 @@ const InputComp = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={isLoading}
-          placeholder="Type your action or question..."
-          className="flex-1 px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:border-blue-500 disabled:bg-gray-200 disabled:cursor-not-allowed"
+          placeholder="ENTER YOUR ACTION..."
+          className="flex-1 px-4 py-3 rounded-lg border-4 border-gray-600 bg-black text-white font-['Press_Start_2P'] text-sm focus:outline-none focus:border-yellow-400 disabled:bg-gray-800 disabled:cursor-not-allowed placeholder-gray-500"
         />
         <button
           type="submit"
           disabled={!input.trim() || isLoading}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="retro-btn bg-green-600 hover:bg-green-700 text-white disabled:bg-gray-600 disabled:cursor-not-allowed px-6 py-3"
         >
-          {isLoading ? "Sending..." : "Send"}
+          {isLoading ? "SENDING..." : "EXECUTE"}
         </button>
       </form>
     </div>

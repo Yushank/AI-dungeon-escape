@@ -23,11 +23,11 @@ export const Timer = () => {
     return "bg-red-500";
   };
 
-  const progressPercentage = (timeRemaining / 600) * 100;
+  const progressPercentage = (timeRemaining / 300) * 100;
 
   return (
     <div
-      className={`bg-white rounded-lg shadow-lg p-4 border-2 ${getTimerColor()}`}
+      className={`bg-white rounded-lg shadow-lg p-3 border-2 ${getTimerColor()}`}
     >
       <div className="flex items-center justify-between mb-2">
         <div>

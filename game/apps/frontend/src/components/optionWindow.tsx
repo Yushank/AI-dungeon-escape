@@ -1,6 +1,5 @@
 import React from "react";
 import { Cards } from "./cards";
-// import { useResponse } from "../hooks";
 import { useGame } from "../context/GameContext";
 
 export const OptionWindow = () => {
@@ -20,8 +19,12 @@ export const OptionWindow = () => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-xl font-bold text-gray-800">Choose Your Action:</h3>
-      <div className="flex gap-4">
+      <h3 className="text-xl font-['Press_Start_2P'] text-yellow-400 text-sm">
+        CHOOSE YOUR ACTION:
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {" "}
+        {/* Changed to grid for better control */}
         {options.map((option: string, index: number) => (
           <Cards key={index} text={option} index={index} />
         ))}

@@ -27,7 +27,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [sessionId, setSessionId] = useState<string>(uuidv4());
-  const [timeRemaining, setTimeRemaining] = useState(600); // 10 minutes
+  const [timeRemaining, setTimeRemaining] = useState(300); // 5 mins
   const [gameStatus, setGameStatus] = useState<
     "idle" | "active" | "won" | "lost"
   >("idle");
@@ -90,7 +90,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
     const newSessionId = uuidv4();
     setSessionId(newSessionId);
     setResponse(null);
-    setTimeRemaining(600);
+    setTimeRemaining(300);
     setGameStatus("idle");
     setTurnCount(0);
     console.log("Starting new game with session:", newSessionId);

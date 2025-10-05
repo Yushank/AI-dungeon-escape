@@ -16,9 +16,9 @@ export const GameWindow = () => {
     navigate("/home");
   };
 
-  // Retro container styles using direct Tailwind
+  // Retro container styles
   const retroContainer =
-    "max-w-4xl mx-auto bg-gray-800 border-4 border-gray-600 rounded-lg p-6 shadow-2xl";
+    "max-w-3xl mx-auto bg-gray-800 border-4 border-gray-600 rounded-lg p-4 shadow-2xl scale-95";
   const retroText =
     "font-['Press_Start_2P'] text-green-400 text-sm leading-relaxed";
   const retroTitle =
@@ -94,7 +94,6 @@ export const GameWindow = () => {
     );
   }
 
-  // No Response Yet
   if (!response) {
     return (
       <div className={retroContainer}>
@@ -113,23 +112,22 @@ export const GameWindow = () => {
     );
   }
 
-  // Active Game - Centered with proper margins
   return (
-    <div className="max-w-6xl mx-auto px-4">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <div className="max-w-3xl mx-auto px-4 scale-95">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
         {/* Sidebar with Timer */}
-        <div className="lg:col-span-1 space-y-4">
+        <div className="lg:col-span-1 space-y-3">
           <Timer />
           <button
             onClick={handlePlayAgain}
-            className="retro-btn w-full bg-gray-700 hover:bg-gray-800 text-white"
+            className="retro-btn w-full bg-gray-700 hover:bg-gray-800 text-white text-xs py-2"
           >
             🔄 RESTART
           </button>
         </div>
 
         {/* Main Game Area */}
-        <div className="lg:col-span-3 space-y-6">
+        <div className="lg:col-span-3 space-y-4">
           <SceneDisplay />
           <OptionWindow />
           <InputComp />
