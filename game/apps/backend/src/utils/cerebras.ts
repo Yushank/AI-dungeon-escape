@@ -1,4 +1,7 @@
 import Cerebras from "@cerebras/cerebras_cloud_sdk";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 interface ChatCompletion {
   choices: Array<{
@@ -20,8 +23,14 @@ interface GameResponse {
   message?: string;
 }
 
+const apiKey = process.env.CEREBRAS_API_KEY;
+
+if (!apiKey) {
+  throw new Error("CEREBRAS_API_KEY is not defined in environment variables");
+}
+
 const client = new Cerebras({
-  apiKey: "csk-fnm462r485hjvy5dmvpe44prjvpy25ewfnv988m4p9ttn9yt",
+  apiKey: apiKey,
 });
 
 const SYSTEM_PROMPT = `You are a dungeon master for an ESCAPE ROOM adventure. Your goal is to create a winnable dungeon escape game.
