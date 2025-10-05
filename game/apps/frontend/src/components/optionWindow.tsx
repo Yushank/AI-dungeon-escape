@@ -4,20 +4,28 @@ import { Cards } from "./cards";
 import { useGame } from "../context/GameContext";
 
 export const OptionWindow = () => {
-  const { response, setIsLoading } = useGame();
+  const { response } = useGame();
 
   if (!response || !response.data || !response.data.options) {
     return null;
   }
 
-  const optionA = response.data.options[0];
-  const optionB = response.data.options[1];
-  console.log("optionA:", optionA);
-  console.log("optionB:", optionB);
+  const options = response.data.options;
+  console.log("Options available:", options);
+
+  if (options.length < 2) {
+    console.warn("Not enough options provided by AI");
+    return null;
+  }
+
   return (
-    <div className="p-6 flex">
-      <Cards text={optionA} />
-      <Cards text={optionB} />
+    <div className="space-y-4">
+      <h3 className="text-xl font-bold text-gray-800">Choose Your Action:</h3>
+      <div className="flex gap-4">
+        {options.map((option: string, index: number) => (
+          <Cards key={index} text={option} index={index} />
+        ))}
+      </div>
     </div>
   );
 };
