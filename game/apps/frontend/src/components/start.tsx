@@ -2,10 +2,26 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export const Start = () => {
   const navigate = useNavigate();
-  const { isLoading, setIsLoading, sessionId } = useGame();
+  const { isLoading, setIsLoading, sessionId, socket } = useGame();
+  const [isConnecting, setIsConnecting] = useState(true);
+
+  useEffect(() => {
+    if (socket) {
+      if (socket.connected) {
+        setIsConnecting(false);
+      } else {
+        socket.on("connect", () => {
+          console.log("✅ Socket ready for game start");
+          setIsConnecting(false);
+        });
+      }
+    }
+  }, [socket]);
 
   async function sendInitialPrompt() {
     setIsLoading(true);

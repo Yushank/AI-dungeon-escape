@@ -13,7 +13,10 @@ app.use(express.json());
 
 export const io = new Server(server, {
   cors: {
-    origin: "https://ai-dungeon-escape-egnf.vercel.app/",
+    origin: [
+      "https://ai-dungeon-escape-egnf.vercel.app", // Remove trailing slash
+      "http://localhost:3000",
+    ],
     methods: ["GET", "POST"],
     credentials: true,
   },
